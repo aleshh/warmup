@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { createTheme } from "@material-ui/core/styles";
+import { createTheme, withStyles } from "@material-ui/core/styles";
 import {
-  Button,
   FormControl,
   FormControlLabel,
   InputAdornment,
   Radio,
   RadioGroup,
-  TextField,
+  TextField as MuiTextField,
   ThemeProvider,
 } from "@material-ui/core";
+import Button from "./components/Button";
 import "./App.css";
 
 const roundDownFive = (val) => {
@@ -17,14 +17,7 @@ const roundDownFive = (val) => {
 };
 
 const plates = [45, 45, 45, 35, 25, 10, 5, 5, 2.5];
-const plateHeights = {
-  45: 45,
-  35: 40,
-  25: 35,
-  10: 30,
-  5: 25,
-  2.5: 20,
-};
+const plateHeights = { 45: 45, 35: 40, 25: 35, 10: 30, 5: 25, 2.5: 20 };
 
 const calculatePlates = (targetWeight) => {
   const weightPerSide = (targetWeight - 45) / 2;
@@ -45,10 +38,10 @@ const calculatePlates = (targetWeight) => {
 };
 
 const multipliers = {
-  squat: [0, 0.4, 0.6, 0.8, 1],
-  "bench press": [0, 0.5, 0.7, 0.9, 1],
+  bench: [0, 0.5, 0.7, 0.9, 1],
   deadlift: [0.4, 0.6, 0.85, 1],
-  "standing press": [0, 0.55, 0.7, 0.85, 1],
+  press: [0, 0.55, 0.7, 0.85, 1],
+  squat: [0, 0.4, 0.6, 0.8, 1],
 };
 
 const calculateWeight = (weight, multiplier) => {
@@ -59,15 +52,23 @@ const calculateWeight = (weight, multiplier) => {
   return result < 45 ? 45 : result;
 };
 
+const TextField = withStyles({
+  root: {
+    "& .MuiOutlinedInput-root": { "& fieldset": { border: "2px solid black" } },
+  },
+})(MuiTextField);
+
 function App() {
   const [warmup, setWarmup] = useState("squat");
   const [value, setValue] = useState("130");
 
   const sets = multipliers[warmup].map((m) => calculateWeight(value, m));
 
-  const handleSetValue = (e) => {
-    const value = roundDownFive(e.targe.value);
-    setValue(value);
+  const handleBlur = () => {
+    const newValue = roundDownFive(value);
+    if (value !== newValue) {
+      setValue(newValue);
+    }
   };
 
   return (
@@ -118,37 +119,28 @@ function App() {
           </FormControl>
         </div>
         <div>
-          <Button
-            style={{ height: 60.75, marginRight: 10, borderColor: "black" }}
-            variant="outlined"
-            // color="default"
-            onClick={() => setValue(parseInt(value) - 5)}
-          >
-            –
-          </Button>
+          <Button onClick={() => setValue(parseInt(value) - 50)}>–50</Button>
+          <Button onClick={() => setValue(parseInt(value) - 5)}>–5</Button>
           <TextField
             variant="outlined"
             InputProps={{
               endAdornment: <InputAdornment position="end">lbs</InputAdornment>,
             }}
             style={{
-              width: 90,
+              width: 110,
+              marginRight: 5,
+              marginLeft: 5,
             }}
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            onBlur={handleBlur}
           />
-          <Button
-            style={{ height: 60.75, marginLeft: 10, borderColor: "black" }}
-            variant="outlined"
-            color="default"
-            onClick={() => setValue(parseInt(value) + 5)}
-          >
-            +
-          </Button>
+          <Button onClick={() => setValue(parseInt(value) + 5)}>+5</Button>
+          <Button onClick={() => setValue(parseInt(value) + 50)}>+50</Button>
         </div>
         <div>
           {sets.map((m) => (
-            <div style={{ margin: 20, fontWeight: "bold" }}>
+            <div key={m} style={{ margin: 20, fontWeight: "bold" }}>
               {m} lbs.{" "}
               <div style={{ display: "inline-flex", alignItems: "center" }}>
                 <div style={{ background: "black", height: 8, width: 60 }} />
