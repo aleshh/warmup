@@ -6,8 +6,8 @@ const Button = (props) => (
       border: "2px solid black",
       fontWeight: "bold",
       height: 60.75,
-      marginRight: 5,
-      marginLeft: 5,
+      marginRight: 4,
+      marginLeft: 4,
       borderColor: "black",
     }}
     variant="outlined"

@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.MuiRadio-root.MuiRadio-root {
+  padding-right: 0;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

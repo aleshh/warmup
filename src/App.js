@@ -17,7 +17,9 @@ const roundDownFive = (val) => {
 };
 
 const plates = [45, 45, 45, 35, 25, 10, 5, 5, 2.5];
-const plateHeights = { 45: 45, 35: 40, 25: 35, 10: 30, 5: 25, 2.5: 20 };
+
+const getPlateHeight = (weight) =>
+  ({ 45: 6, 35: 5, 25: 4, 10: 3, 5: 2, 2.5: 1 }[weight] * 10 + 40);
 
 const calculatePlates = (targetWeight) => {
   const weightPerSide = (targetWeight - 45) / 2;
@@ -59,8 +61,8 @@ const TextField = withStyles({
 })(MuiTextField);
 
 function App() {
-  const [warmup, setWarmup] = useState("squat");
-  const [value, setValue] = useState("130");
+  const [warmup, setWarmup] = useState("bench");
+  const [value, setValue] = useState("150");
 
   const sets = multipliers[warmup].map((m) => calculateWeight(value, m));
 
@@ -127,9 +129,9 @@ function App() {
               endAdornment: <InputAdornment position="end">lbs</InputAdornment>,
             }}
             style={{
-              width: 110,
-              marginRight: 5,
-              marginLeft: 5,
+              width: 96,
+              marginRight: 4,
+              marginLeft: 4,
             }}
             value={value}
             onChange={(e) => setValue(e.target.value)}
@@ -151,8 +153,8 @@ function App() {
                       color: "rgb(255, 196, 0)",
                       borderRight: "1px solid rgb(255, 196, 0)",
                       width: 25,
-                      height: plateHeights[plate] * 1.5,
-                      lineHeight: `${plateHeights[plate] * 1.5}px`,
+                      height: getPlateHeight(plate),
+                      lineHeight: `${getPlateHeight(plate)}px`,
                       textAlign: "center",
                     }}
                   >
