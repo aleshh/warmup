@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { createTheme, withStyles } from "@material-ui/core/styles";
 import {
   FormControl,
   FormControlLabel,
   InputAdornment,
   Radio,
   RadioGroup,
-  TextField as MuiTextField,
-  ThemeProvider,
 } from "@material-ui/core";
+import ThemeProvider from "./components/ThemeProvider";
 import Button from "./components/Button";
+import TextField from "./components/TextField";
 import "./App.css";
 
 const roundDownFive = (val) => {
@@ -54,12 +53,6 @@ const calculateWeight = (weight, multiplier) => {
   return result < 45 ? 45 : result;
 };
 
-const TextField = withStyles({
-  root: {
-    "& .MuiOutlinedInput-root": { "& fieldset": { border: "2px solid black" } },
-  },
-})(MuiTextField);
-
 function App() {
   const [warmup, setWarmup] = useState("bench");
   const [value, setValue] = useState("150");
@@ -74,22 +67,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider
-      theme={createTheme({
-        typography: {
-          fontFamily: '"Share Tech", sans-serif',
-          fontWeightRegular: "bold",
-        },
-        palette: {
-          primary: {
-            main: "#000000",
-          },
-        },
-        shape: {
-          borderRadius: 0,
-        },
-      })}
-    >
+    <ThemeProvider>
       <div
         style={{
           marginTop: 20,
@@ -101,7 +79,6 @@ function App() {
         <div>
           <FormControl component="fieldset">
             <RadioGroup
-              className={undefined}
               aria-label="warmup"
               name="warmup"
               value={warmup}
@@ -110,7 +87,6 @@ function App() {
             >
               {Object.keys(multipliers).map((key, i) => (
                 <FormControlLabel
-                  className={undefined}
                   value={key}
                   key={key}
                   control={<Radio style={{ color: "black" }} />}
@@ -146,8 +122,9 @@ function App() {
               {m} lbs.{" "}
               <div style={{ display: "inline-flex", alignItems: "center" }}>
                 <div style={{ background: "black", height: 8, width: 60 }} />
-                {calculatePlates(m).map((plate) => (
+                {calculatePlates(m).map((plate, i) => (
                   <div
+                    key={i}
                     style={{
                       background: "black",
                       color: "rgb(255, 196, 0)",
