@@ -5,7 +5,7 @@ import {
   InputAdornment,
   Radio,
   RadioGroup,
-} from "@material-ui/core";
+} from "@mui/material";
 import ThemeProvider from "./components/ThemeProvider";
 import Button from "./components/Button";
 import TextField from "./components/TextField";

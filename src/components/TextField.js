@@ -1,6 +1,6 @@
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 
-import { TextField as MuiTextField } from "@material-ui/core";
+import { TextField as MuiTextField } from "@mui/material";
 
 const TextField = withStyles({
   root: {
