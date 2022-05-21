@@ -130,8 +130,8 @@ function App() {
             }}
             style={{
               width: 96,
-              marginRight: 4,
-              marginLeft: 4,
+              marginRight: 2,
+              marginLeft: 2,
             }}
             value={value}
             onChange={(e) => setValue(e.target.value)}

@@ -31,6 +31,9 @@
 .MuiRadio-root.MuiRadio-root {
   padding-right: 0;
 }
+.MuiFormControlLabel-root.MuiFormControlLabel-root {
+  margin-right: 10px;
+}
 
 @keyframes App-logo-spin {
   from {
