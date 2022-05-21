@@ -10,7 +10,6 @@ import ThemeProvider from "./components/ThemeProvider";
 import Button from "./components/Button";
 import TextField from "./components/TextField";
 import Configure from "./components/Configure";
-import "./App.css";
 
 const roundDownFive = (val) => {
   return Math.floor(val / 5) * 5;
